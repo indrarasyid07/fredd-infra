@@ -2,6 +2,12 @@
 
 Catatan per fase, terbaru di atas.
 
+## 2026-11-13 · Mode Docker
+
+- `docker-compose.yml` mendapat profile `app`: `migrate`, `api`, `web`, `caddy`; aplikasi di `http://localhost:8080`.
+- `caddy/Caddyfile` untuk routing lokal (SSE tanpa buffer); `.env.example` untuk port host.
+- Diuji: health 200 lewat Caddy, `/app` redirect ke `/login`, migrasi sukses, container berjalan sebagai non-root.
+
 ## 2026-11-13 · Folder infra
 
 - `docker-compose.yml` dipindah dari root ke `infra/`; nama project dikunci `fredd`.

@@ -32,7 +32,8 @@ Hanya Caddy yang membuka port ke publik. Postgres dan Redis tidak pernah diberi 
 
 | Lingkungan | Isi | Domain |
 |---|---|---|
-| development | `infra/docker-compose.yml` (Postgres + Redis); api dan web jalan native | `localhost` |
+| development (native) | `infra/docker-compose.yml` (Postgres + Redis); api dan web jalan native | `localhost` |
+| development (Docker) | `infra/docker-compose.yml --profile app`: + migrate, api, web, Caddy | `localhost:8080` |
 | staging | Compose produksi + seed `demo` | `staging.<domain>` |
 | production | Compose produksi | `<domain>` |
 
@@ -42,5 +43,6 @@ Hanya Caddy yang membuka port ke publik. Postgres dan Redis tidak pernah diberi 
 |---|---|---|
 | Postgres | 5433 | 5432 sering dipakai Postgres native |
 | Redis | 6380 | 6379 sering dipakai Redis native |
+| App (profile `app`, lewat Caddy) | 8080 | Tidak bentrok dengan 3000/8000 yang sering dipakai |
 
-Port hanya di-bind ke `127.0.0.1`. Nama project compose dikunci `fredd` agar nama container dan volume tidak tergantung nama folder.
+Semua port bisa diubah lewat `infra/.env` (lihat `.env.example`). Port hanya di-bind ke `127.0.0.1`. Di mode Docker, `api` dan `web` tidak membuka port host; semua lewat Caddy seperti produksi. Nama project compose dikunci `fredd` agar nama container dan volume tidak tergantung nama folder.

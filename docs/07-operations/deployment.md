@@ -2,15 +2,18 @@
 
 Konfigurasi khusus aplikasi (env, migrasi, zona waktu) ada di [backend deployment](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/07-operations/deployment.md) dan [frontend deployment](https://gitlab.com/databiota-fredd/frontend/-/blob/main/docs/07-operations/deployment.md).
 
-## Berkas yang akan dibuat di fase deploy
+## Berkas
 
 ```
 infra/
-├── docker-compose.yml        # development (sudah ada)
-├── docker-compose.prod.yml   # caddy, web, api, worker, migrate, postgres, redis
-├── caddy/Caddyfile
-└── scripts/backup.sh         # pg_dump terenkripsi ke object storage
+├── docker-compose.yml        # development: native (postgres, redis) + profile app (migrate, api, web, caddy)   [ada]
+├── caddy/Caddyfile           # routing lokal; produksi menambah domain dan TLS                                  [ada]
+├── .env.example              # port host lokal                                                                   [ada]
+├── docker-compose.prod.yml   # + worker, role DB terpisah, Redis AOF, secrets                                    [fase deploy]
+└── scripts/backup.sh         # pg_dump terenkripsi ke object storage                                             [fase deploy]
 ```
+
+Image aplikasi dibangun dari `backend/Dockerfile` dan `frontend/Dockerfile`; keduanya sudah dipakai mode Docker lokal, jadi compose produksi cukup memakai image yang sama dengan env produksi.
 
 ## Urutan deploy
 

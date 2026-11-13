@@ -1,6 +1,8 @@
-# Development services only. Host ports 5433/6380 avoid clashing with a native Postgres/Redis.
-# The API and web app run natively for hot reload.
-# The production compose (api, worker, web, caddy) is added in the deployment phase.
+# Local development. Two ways to run (see README.md):
+#   docker compose -f infra/docker-compose.yml up -d --wait                  -> Postgres + Redis only; run api/web natively
+#   docker compose -f infra/docker-compose.yml --profile app up -d --build --wait -> full stack behind Caddy
+# Build contexts assume backend/, frontend/ and infra/ are cloned side by side.
+# Host ports 5433/6380 avoid clashing with a native Postgres/Redis; override any host port via infra/.env.
 # Fixed project name keeps container and volume names stable regardless of folder.
 name: fredd
 
@@ -12,7 +14,7 @@ services:
       POSTGRES_PASSWORD: fredd
       POSTGRES_DB: fredd
     ports:
-      - "127.0.0.1:5433:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -23,11 +25,59 @@ services:
   redis:
     image: redis:8
     ports:
-      - "127.0.0.1:6380:6379"
+      - "127.0.0.1:${REDIS_PORT:-6380}:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       retries: 10
+
+  # --- full stack (profile "app") ---
+
+  migrate:
+    profiles: [app]
+    build: ../backend
+    image: fredd-api
+    command: ["alembic", "upgrade", "head"]
+    environment: &api-env
+      ENVIRONMENT: development
+      DATABASE_URL: postgresql+asyncpg://fredd:fredd@postgres:5432/fredd
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    profiles: [app]
+    build: ../backend
+    image: fredd-api
+    environment: *api-env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  web:
+    profiles: [app]
+    build:
+      context: ../frontend
+      args:
+        NEXT_PUBLIC_SITE_URL: http://localhost:${APP_PORT:-8080}
+        SITE_ENV: development
+    image: fredd-web
+
+  caddy:
+    profiles: [app]
+    image: caddy:2
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:80"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      api:
+        condition: service_healthy
+      web:
+        condition: service_healthy
 
 volumes:
   postgres-data:

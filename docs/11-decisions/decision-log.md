@@ -9,3 +9,6 @@
 | I-005 | 2026-11-13 | Nama project compose dikunci `fredd` | Nama container dan volume tidak berubah bila folder dipindah | Diterima |
 | I-006 | 2026-11-13 | Caddy sebagai reverse proxy | TLS otomatis, konfigurasi singkat, SSE mudah | Diusulkan |
 | I-007 | 2026-11-13 | Redis dengan AOF dan `noeviction` di staging/produksi | Antrean job tidak boleh hilang | Diusulkan |
+| I-008 | 2026-11-13 | Dua mode lokal: native (hot reload) dan Docker (profile `app`) | Developer tetap cepat; anggota tim lain bisa menjalankan semua hanya dengan Docker | Diterima |
+| I-009 | 2026-11-13 | Mode Docker memakai image produksi di belakang Caddy, tanpa bind mount | Perilaku sama dengan produksi; hot reload lewat bind mount lambat dan rapuh di Windows | Diterima |
+| I-010 | 2026-11-13 | Port host lewat `infra/.env` (default 5433, 6380, 8080) | Mesin developer sering sudah memakai 3000/8000/5432/6379 | Diterima |

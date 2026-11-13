@@ -1,0 +1,22 @@
+# Local full stack (compose profile "app"). Production adds a real domain and automatic TLS.
+:80 {
+	# Server-Sent Events: stream immediately, never buffer.
+	handle /api/v1/events {
+		reverse_proxy api:8000 {
+			flush_interval -1
+		}
+	}
+
+	handle /api/* {
+		reverse_proxy api:8000
+	}
+
+	handle /webhooks/* {
+		reverse_proxy api:8000
+	}
+
+	handle {
+		encode zstd gzip
+		reverse_proxy web:3000
+	}
+}
