@@ -1,0 +1,25 @@
+# Secrets: any env file except the documented example
+.env*
+!.env.example
+
+# Database dumps and backups (scripts/backup.sh writes these)
+*.dump
+*.sql.gz
+*.backup
+backups/
+
+# Caddy runtime data (certificates) if a volume is ever bind-mounted here
+caddy/data/
+caddy/config/
+
+# Logs
+*.log
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+.claude/settings.local.json

@@ -1,0 +1,33 @@
+# Development services only. Host ports 5433/6380 avoid clashing with a native Postgres/Redis.
+# The API and web app run natively for hot reload.
+# The production compose (api, worker, web, caddy) is added in the deployment phase.
+# Fixed project name keeps container and volume names stable regardless of folder.
+name: fredd
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: fredd
+      POSTGRES_PASSWORD: fredd
+      POSTGRES_DB: fredd
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fredd"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:8
+    ports:
+      - "127.0.0.1:6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  postgres-data:
