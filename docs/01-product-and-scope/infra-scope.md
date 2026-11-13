@@ -16,7 +16,7 @@
 | Hal | Tempat |
 |---|---|
 | Migrasi skema (Alembic) | `backend/migrations` (berubah bersama model) |
-| Seed data | `backend` (`fredd.seed`) |
+| Seed data | `backend` (`scripts/seed.py`, data di `fixtures/`) |
 | Dockerfile aplikasi | `backend/` dan `frontend/` (dibangun dari kode masing-masing) |
 | Variabel env aplikasi | `backend/.env.example`, `frontend/.env.example` |
 

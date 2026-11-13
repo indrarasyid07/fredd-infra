@@ -23,7 +23,7 @@ Hanya Caddy yang membuka port ke publik. Postgres dan Redis tidak pernah diberi 
 | `caddy` | `caddy:2` | `caddy-data` (sertifikat) | Satu-satunya pintu masuk |
 | `web` | dibangun dari `frontend/` | – | `node server.js` |
 | `api` | dibangun dari `backend/` | – | `uvicorn`, bisa lebih dari 1 replika |
-| `worker` | sama dengan `api` | – | `arq fredd.worker.WorkerSettings` |
+| `worker` | sama dengan `api` | – | `arq app.worker.WorkerSettings` |
 | `migrate` | sama dengan `api` | – | Job satu kali `alembic upgrade head` sebelum `api`/`worker` start |
 | `postgres` | `postgres:17` | `postgres-data` | |
 | `redis` | `redis:8` | `redis-data` | AOF aktif agar antrean tidak hilang saat restart |

@@ -2,6 +2,10 @@
 
 Catatan per fase, terbaru di atas.
 
+## 2026-11-14 · Path backend
+
+- Perintah worker dan seed mengikuti struktur backend baru (`app.worker`, `scripts/seed.py`).
+
 ## 2026-11-13 · Paket berbayar
 
 - Desain Upgrade menambah webhook penyedia pembayaran di `/webhooks/payments/{provider}`; sudah tercakup routing `/webhooks/*` di Caddy.
