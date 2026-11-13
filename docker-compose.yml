@@ -42,6 +42,8 @@ services:
       ENVIRONMENT: development
       DATABASE_URL: postgresql+asyncpg://fredd:fredd@postgres:5432/fredd
       REDIS_URL: redis://redis:6379/0
+      # The browser reaches the app through Caddy; the CSRF check only accepts that origin.
+      APP_BASE_URL: http://localhost:${APP_PORT:-8080}
     depends_on:
       postgres:
         condition: service_healthy
@@ -65,6 +67,9 @@ services:
         NEXT_PUBLIC_SITE_URL: http://localhost:${APP_PORT:-8080}
         SITE_ENV: development
     image: fredd-web
+    environment:
+      # Server components validate the session against the API inside the Docker network.
+      API_INTERNAL_URL: http://api:8000
 
   caddy:
     profiles: [app]

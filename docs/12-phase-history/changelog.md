@@ -2,6 +2,10 @@
 
 Catatan per fase, terbaru di atas.
 
+## 2026-11-14 · Env untuk login
+
+- `api`/`migrate` mendapat `APP_BASE_URL=http://localhost:${APP_PORT}` agar cek CSRF menerima asal Caddy; `web` mendapat `API_INTERNAL_URL=http://api:8000` untuk validasi sesi di server.
+
 ## 2026-11-14 · Path backend
 
 - Perintah worker dan seed mengikuti struktur backend baru (`app.worker`, `scripts/seed.py`).
