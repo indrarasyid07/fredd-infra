@@ -26,3 +26,4 @@
 2. Postgres dikelola sendiri di container atau managed service?
 3. Penyedia object storage untuk foto.
 4. Penyedia error tracking.
+5. Penyedia pembayaran (paket berbayar dari halaman Upgrade) butuh URL webhook HTTPS publik yang stabil, sama seperti WhatsApp dan Telegram.

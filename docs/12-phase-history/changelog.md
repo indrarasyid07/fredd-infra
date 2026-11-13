@@ -2,6 +2,10 @@
 
 Catatan per fase, terbaru di atas.
 
+## 2026-11-13 · Paket berbayar
+
+- Desain Upgrade menambah webhook penyedia pembayaran di `/webhooks/payments/{provider}`; sudah tercakup routing `/webhooks/*` di Caddy.
+
 ## 2026-11-13 · Mode Docker
 
 - `docker-compose.yml` mendapat profile `app`: `migrate`, `api`, `web`, `caddy`; aplikasi di `http://localhost:8080`.
