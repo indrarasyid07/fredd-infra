@@ -12,3 +12,4 @@
 | I-008 | 2026-11-13 | Dua mode lokal: native (hot reload) dan Docker (profile `app`) | Developer tetap cepat; anggota tim lain bisa menjalankan semua hanya dengan Docker | Diterima |
 | I-009 | 2026-11-13 | Mode Docker memakai image produksi di belakang Caddy, tanpa bind mount | Perilaku sama dengan produksi; hot reload lewat bind mount lambat dan rapuh di Windows | Diterima |
 | I-010 | 2026-11-13 | Port host lewat `infra/.env` (default 5433, 6380, 8080) | Mesin developer sering sudah memakai 3000/8000/5432/6379 | Diterima |
+| I-011 | 2026-11-14 | Pesan commit mengikuti Conventional Commits dalam Bahasa Inggris, tanpa baris atribusi AI/alat dan tanpa referensi ke file desain ([commit-conventions](../00-governance/commit-conventions.md)) | Riwayat yang seragam dan bermakna tanpa bergantung pada alat yang dipakai | Diterima |

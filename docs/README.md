@@ -4,7 +4,7 @@ Dokumentasi infrastruktur pendukung Fredd: database, Redis, reverse proxy, deplo
 
 | Folder | Isi |
 |---|---|
-| [00-governance](00-governance/README.md) | Aturan dokumentasi (sama dengan backend) |
+| [00-governance](00-governance/README.md) | Aturan dokumentasi (sama dengan backend); [standar pesan commit](00-governance/commit-conventions.md) |
 | [01-product-and-scope](01-product-and-scope/infra-scope.md) | Apa yang diurus folder `infra/` dan apa yang tidak |
 | [02-architecture](02-architecture/infrastructure-architecture.md) | Topologi layanan, jaringan, volume, lingkungan |
 | [03-api](03-api/README.md) | Aturan routing reverse proxy |

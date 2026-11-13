@@ -2,6 +2,10 @@
 
 Catatan per fase, terbaru di atas.
 
+## 2026-11-14 · Standar commit
+
+- `00-governance/commit-conventions.md`: format, type, scope, aturan subject/body/footer, larangan (atribusi AI, referensi file desain, rahasia, data pribadi), dan contoh.
+
 ## 2026-11-14 · Env untuk login
 
 - `api`/`migrate` mendapat `APP_BASE_URL=http://localhost:${APP_PORT}` agar cek CSRF menerima asal Caddy; `web` mendapat `API_INTERNAL_URL=http://api:8000` untuk validasi sesi di server.
