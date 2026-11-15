@@ -1,6 +1,6 @@
 # Seeding
 
-Isi data ada di [backend seed-data.md](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/09-seeding/seed-data.md). Dari sisi infra, reset database dev:
+Isi data ada di [backend seed-data.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/09-seeding/seed-data.md). Dari sisi infra, reset database dev:
 
 ```bash
 docker compose -f infra/docker-compose.yml down -v

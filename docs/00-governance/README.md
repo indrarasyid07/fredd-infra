@@ -1,6 +1,6 @@
 # Governance
 
-Aturan yang sama dengan backend: [documentation-guidelines.md](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/00-governance/documentation-guidelines.md).
+Aturan yang sama dengan backend: [documentation-guidelines.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/documentation-guidelines.md).
 
 Tambahan khusus infra:
 

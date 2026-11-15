@@ -1,6 +1,6 @@
 # Database Operations
 
-Model data dan konvensi skema: [backend/docs/04-database/data-model.md](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/04-database/data-model.md). Dokumen ini tentang menjalankan databasenya.
+Model data dan konvensi skema: [backend/docs/04-database/data-model.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/04-database/data-model.md). Dokumen ini tentang menjalankan databasenya.
 
 ## PostgreSQL
 

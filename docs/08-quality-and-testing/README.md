@@ -5,4 +5,4 @@
 - **Health check**: setiap layanan compose punya `healthcheck`; `up --wait` gagal bila layanan tidak sehat.
 - **Uji restore** bulanan dicatat di [changelog](../12-phase-history/changelog.md).
 
-Strategi tes aplikasi: [backend](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/08-quality-and-testing/testing-strategy.md), [frontend](https://gitlab.com/databiota-fredd/frontend/-/blob/main/docs/08-quality-and-testing/testing-strategy.md).
+Strategi tes aplikasi: [backend](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/08-quality-and-testing/testing-strategy.md), [frontend](https://gitlab.com/databiota-fredd/frontend/-/blob/development/docs/08-quality-and-testing/testing-strategy.md).

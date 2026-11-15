@@ -21,4 +21,4 @@ Dokumentasi infrastruktur pendukung Fredd: database, Redis, reverse proxy, deplo
 | [14-agent-guides](14-agent-guides/agent-guidelines.md) | Panduan AI coding agent |
 | [99-archive](99-archive/README.md) | Dokumen lama |
 
-Dokumentasi aplikasi: [backend/docs](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/README.md), [frontend/docs](https://gitlab.com/databiota-fredd/frontend/-/blob/main/docs/README.md).
+Dokumentasi aplikasi: [backend/docs](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/README.md), [frontend/docs](https://gitlab.com/databiota-fredd/frontend/-/blob/development/docs/README.md).

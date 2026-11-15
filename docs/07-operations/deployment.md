@@ -1,6 +1,6 @@
 # Deployment
 
-Konfigurasi khusus aplikasi (env, migrasi, zona waktu) ada di [backend deployment](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/07-operations/deployment.md) dan [frontend deployment](https://gitlab.com/databiota-fredd/frontend/-/blob/main/docs/07-operations/deployment.md).
+Konfigurasi khusus aplikasi (env, migrasi, zona waktu) ada di [backend deployment](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/07-operations/deployment.md) dan [frontend deployment](https://gitlab.com/databiota-fredd/frontend/-/blob/development/docs/07-operations/deployment.md).
 
 ## Berkas
 

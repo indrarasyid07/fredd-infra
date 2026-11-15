@@ -43,7 +43,7 @@ Fredd dijual sebagai SaaS berlangganan dengan dua jenis workspace:
 | Perorangan | Gratis, Plus |
 | Organisasi | Starter, Growth, Enterprise |
 
-Paket membatasi jumlah anggota, struktur data aktif, dan laporan per bulan; tagihan bulanan atau tahunan. Rincian: [billing-and-plans.md](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/06-domain-guides/billing-and-plans.md).
+Paket membatasi jumlah anggota, struktur data aktif, dan laporan per bulan; tagihan bulanan atau tahunan. Rincian: [billing-and-plans.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/06-domain-guides/billing-and-plans.md).
 
 ### Status pengembangan (14 November 2026)
 
@@ -60,7 +60,7 @@ Paket membatasi jumlah anggota, struktur data aktif, dan laporan per bulan; tagi
 | WhatsApp Cloud API | Belum (menunggu verifikasi bisnis Meta) |
 | Paket dan tagihan | Belum |
 
-Urutan lengkap: [roadmap backend](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/10-roadmap/roadmap.md) dan [roadmap frontend](https://gitlab.com/databiota-fredd/frontend/-/blob/main/docs/10-roadmap/roadmap.md).
+Urutan lengkap: [roadmap backend](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/10-roadmap/roadmap.md) dan [roadmap frontend](https://gitlab.com/databiota-fredd/frontend/-/blob/development/docs/10-roadmap/roadmap.md).
 
 ## Gambaran teknis
 
@@ -127,9 +127,10 @@ Dua cara, keduanya dari folder induk yang berisi ketiga repo:
 
 ### Kontribusi
 
-- Pesan commit mengikuti [commit-conventions.md](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/00-governance/commit-conventions.md) (Conventional Commits, Bahasa Inggris).
-- Dokumentasi mengikuti [documentation-guidelines.md](https://gitlab.com/databiota-fredd/backend/-/blob/main/docs/00-governance/documentation-guidelines.md).
+- Pesan commit mengikuti [commit-conventions.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/commit-conventions.md) (Conventional Commits, Bahasa Inggris).
+- Dokumentasi mengikuti [documentation-guidelines.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/documentation-guidelines.md).
 - File `.env`, hasil build, dan data lapangan tidak pernah di-commit.
+- Cabang utama adalah `development` (default di GitLab); semua pekerjaan masuk ke sana. `main` berisi commit awal dan hanya diperbarui lewat merge dari `development` ([aturan cabang](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/commit-conventions.md#cabang)).
 
 ## Repo ini: infra
 
