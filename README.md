@@ -52,7 +52,7 @@ Paket membatasi jumlah anggota, struktur data aktif, dan laporan per bulan; tagi
 | Fondasi backend, frontend, dan infra; Docker Compose | Selesai |
 | Format respons API standar, request ID, proteksi CSRF | Selesai |
 | Masuk dengan email + kata sandi, keluar, cek sesi | Selesai |
-| Landing page publik (`/`) dengan SEO | Selesai |
+| Website publik dengan SEO: landing, Tentang Kami, Harga, Terra, Nexus, API, Blog, Dokumentasi, Keamanan, Kontak | Selesai (Blog berisi artikel contoh; formulir Kontak belum aktif) |
 | Daftar akun, lupa kata sandi, masuk dengan Google | Berikutnya |
 | Workspace, anggota, dan peran | Belum |
 | Kanal Telegram dan mesin percakapan | Belum |
