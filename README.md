@@ -53,7 +53,7 @@ Paket membatasi jumlah anggota, struktur data aktif, dan laporan per bulan; tagi
 | Format respons API standar, request ID, proteksi CSRF | Selesai |
 | Masuk dengan email + kata sandi, keluar, cek sesi | Selesai |
 | Website publik dengan SEO: landing, Tentang Kami, Harga, Terra, Nexus, API, Blog, Dokumentasi, Keamanan, Kontak | Selesai (Blog berisi artikel contoh; formulir Kontak belum aktif) |
-| Daftar akun, lupa kata sandi, masuk dengan Google | Berikutnya |
+| Daftar akun, verifikasi email, lupa kata sandi, masuk dengan Google | Backend selesai (email lewat SMTP, Google perlu client OAuth); layar webnya menyusul |
 | Workspace, anggota, dan peran | Belum |
 | Kanal Telegram dan mesin percakapan | Belum |
 | Penyusun struktur data, data lapangan, peta, ekspor | Belum |
@@ -109,7 +109,7 @@ git clone https://gitlab.com/databiota-fredd/infra.git
 | Backend | Python 3.14, FastAPI, Pydantic v2, SQLAlchemy 2 async + asyncpg, Alembic, uv |
 | Frontend | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, openapi-fetch |
 | Data | PostgreSQL 17, Redis 8 |
-| Auth | Sesi opaque di cookie HttpOnly, hash argon2 untuk kata sandi; Google OAuth menyusul |
+| Auth | Sesi opaque di cookie HttpOnly, hash argon2 untuk kata sandi; Google OAuth (kode otorisasi + PKCE) |
 | Kualitas | ruff, pyright, pytest (backend); ESLint, TypeScript strict (frontend) |
 | Jalankan dan deploy | Docker Compose, Caddy |
 | Kanal chat | Telegram Bot API, WhatsApp Cloud API (menyusul) |
