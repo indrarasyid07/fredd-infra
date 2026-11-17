@@ -22,7 +22,7 @@ Lalu jalankan backend (`uv run uvicorn …`) dan frontend (`npm run dev`) sesuai
 
 | Layanan | Alamat | Login |
 |---|---|---|
-| PostgreSQL | `127.0.0.1:5433`, database `fredd` | `fredd` / `fredd` |
+| PostgreSQL | `127.0.0.1:5433`, database `fluctuz` | `fluctuz` / `fluctuz` |
 | Redis | `127.0.0.1:6380` | – |
 
 ### Docker
@@ -53,7 +53,7 @@ docker compose -f infra/docker-compose.yml --profile app ps
 docker compose -f infra/docker-compose.yml --profile app logs -f api
 
 # psql ke database dev
-docker compose -f infra/docker-compose.yml exec postgres psql -U fredd
+docker compose -f infra/docker-compose.yml exec postgres psql -U fluctuz
 
 # redis-cli
 docker compose -f infra/docker-compose.yml exec redis redis-cli

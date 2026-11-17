@@ -15,11 +15,11 @@ Model data dan konvensi skema: [backend/docs/04-database/data-model.md](https://
 
 | Role | Hak | Dipakai oleh |
 |---|---|---|
-| `fredd_owner` | Pemilik skema, DDL | Job `migrate` saja |
-| `fredd_app` | `SELECT/INSERT/UPDATE/DELETE` pada tabel aplikasi | `api`, `worker` |
-| `fredd_readonly` | `SELECT` | Analitik ad hoc, debugging |
+| `fluctuz_owner` | Pemilik skema, DDL | Job `migrate` saja |
+| `fluctuz_app` | `SELECT/INSERT/UPDATE/DELETE` pada tabel aplikasi | `api`, `worker` |
+| `fluctuz_readonly` | `SELECT` | Analitik ad hoc, debugging |
 
-Development memakai satu user `fredd` (superuser container) demi kesederhanaan; pemisahan role berlaku di staging dan produksi.
+Development memakai satu user `fluctuz` (superuser container) demi kesederhanaan; pemisahan role berlaku di staging dan produksi.
 
 ### Backup
 

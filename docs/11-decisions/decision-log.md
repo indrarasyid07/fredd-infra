@@ -6,7 +6,7 @@
 | I-002 | 2026-11-13 | Migrasi Alembic tetap di `backend/` | Migrasi berubah bersama model SQLAlchemy | Diterima |
 | I-003 | 2026-11-13 | Development: hanya Postgres dan Redis di Docker; api dan web jalan native | Hot reload cepat, debug langsung | Diterima |
 | I-004 | 2026-11-13 | Port host dev 5433 dan 6380, bind `127.0.0.1` | Hindari bentrok dengan Postgres/Redis native | Diterima |
-| I-005 | 2026-11-13 | Nama project compose dikunci `fredd` | Nama container dan volume tidak berubah bila folder dipindah | Diterima |
+| I-005 | 2026-11-13 | Nama project compose dikunci `fluctuz` | Nama container dan volume tidak berubah bila folder dipindah | Diterima |
 | I-006 | 2026-11-13 | Caddy sebagai reverse proxy | TLS otomatis, konfigurasi singkat, SSE mudah | Diusulkan |
 | I-007 | 2026-11-13 | Redis dengan AOF dan `noeviction` di staging/produksi | Antrean job tidak boleh hilang | Diusulkan |
 | I-008 | 2026-11-13 | Dua mode lokal: native (hot reload) dan Docker (profile `app`) | Developer tetap cepat; anggota tim lain bisa menjalankan semua hanya dengan Docker | Diterima |

@@ -1,6 +1,6 @@
-# Fredd Infra Docs
+# Fluctuz Infra Docs
 
-Dokumentasi infrastruktur pendukung Fredd: database, Redis, reverse proxy, deploy, backup, dan observabilitas. Isi Bahasa Indonesia; nama file dan konfigurasi Bahasa Inggris.
+Dokumentasi infrastruktur pendukung Fluctuz: database, Redis, reverse proxy, deploy, backup, dan observabilitas. Isi Bahasa Indonesia; nama file dan konfigurasi Bahasa Inggris.
 
 | Folder | Isi |
 |---|---|

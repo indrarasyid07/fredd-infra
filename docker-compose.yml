@@ -4,21 +4,21 @@
 # Build contexts assume backend/, frontend/ and infra/ are cloned side by side.
 # Host ports 5433/6380 avoid clashing with a native Postgres/Redis; override any host port via infra/.env.
 # Fixed project name keeps container and volume names stable regardless of folder.
-name: fredd
+name: fluctuz
 
 services:
   postgres:
     image: postgres:17
     environment:
-      POSTGRES_USER: fredd
-      POSTGRES_PASSWORD: fredd
-      POSTGRES_DB: fredd
+      POSTGRES_USER: fluctuz
+      POSTGRES_PASSWORD: fluctuz
+      POSTGRES_DB: fluctuz
     ports:
       - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U fredd"]
+      test: ["CMD-SHELL", "pg_isready -U fluctuz"]
       interval: 5s
       retries: 10
 
@@ -36,11 +36,11 @@ services:
   migrate:
     profiles: [app]
     build: ../backend
-    image: fredd-api
+    image: fluctuz-api
     command: ["alembic", "upgrade", "head"]
     environment: &api-env
       ENVIRONMENT: development
-      DATABASE_URL: postgresql+asyncpg://fredd:fredd@postgres:5432/fredd
+      DATABASE_URL: postgresql+asyncpg://fluctuz:fluctuz@postgres:5432/fluctuz
       REDIS_URL: redis://redis:6379/0
       # The browser reaches the app through Caddy; the CSRF check only accepts that origin.
       APP_BASE_URL: http://localhost:${APP_PORT:-8080}
@@ -50,7 +50,7 @@ services:
       SMTP_PORT: ${SMTP_PORT:-587}
       SMTP_USER: ${SMTP_USER:-}
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
-      SMTP_FROM: ${SMTP_FROM:-Fredd <no-reply@fredd.id>}
+      SMTP_FROM: ${SMTP_FROM:-Fluctuz <no-reply@fluctuz.id>}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
     depends_on:
@@ -60,7 +60,7 @@ services:
   api:
     profiles: [app]
     build: ../backend
-    image: fredd-api
+    image: fluctuz-api
     environment: *api-env
     depends_on:
       migrate:
@@ -75,7 +75,7 @@ services:
       args:
         NEXT_PUBLIC_SITE_URL: http://localhost:${APP_PORT:-8080}
         SITE_ENV: development
-    image: fredd-web
+    image: fluctuz-web
     environment:
       # Server components validate the session against the API inside the Docker network.
       API_INTERNAL_URL: http://api:8000

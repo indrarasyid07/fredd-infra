@@ -1,14 +1,14 @@
-# Fredd Infra
+# Fluctuz Infra
 
-Infrastruktur Fredd: PostgreSQL, Redis, Caddy, dan Docker Compose untuk menjalankan seluruh aplikasi.
+Infrastruktur Fluctuz: PostgreSQL, Redis, Caddy, dan Docker Compose untuk menjalankan seluruh aplikasi.
 
-- [Tentang Fredd](#tentang-fredd)
+- [Tentang Fluctuz](#tentang-fluctuz)
 - [Gambaran teknis](#gambaran-teknis)
 - [Repo ini: infra](#repo-ini-infra)
 
-## Tentang Fredd
+## Tentang Fluctuz
 
-Fredd adalah **asisten AI untuk pengumpulan data lapangan**. Penyuluh pertanian cukup melapor lewat chat WhatsApp atau Telegram yang sudah mereka pakai setiap hari; Fredd menanyakan isian satu per satu, memeriksa jawabannya, lalu menyimpannya sebagai data rapi yang langsung tampil di dashboard instansi.
+Fluctuz adalah **asisten AI untuk pengumpulan data lapangan**. Penyuluh pertanian cukup melapor lewat chat WhatsApp atau Telegram yang sudah mereka pakai setiap hari; Fluctuz menanyakan isian satu per satu, memeriksa jawabannya, lalu menyimpannya sebagai data rapi yang langsung tampil di dashboard instansi.
 
 ### Masalah yang diselesaikan
 
@@ -22,7 +22,7 @@ Laporan lapangan (kondisi tanaman, serangan hama, luas tanam, hasil panen) umumn
 ### Cara kerja
 
 1. **Rancang.** Admin menyusun *struktur data* (daftar isian dan aturannya: teks, angka, pilihan, foto, lokasi, tanggal) di dashboard, dibantu Agen AI.
-2. **Lapor lewat chat.** Fredd menghubungi penyuluh di WhatsApp atau Telegram, menanyakan isian satu pesan per pertanyaan, mengoreksi jawaban yang tidak valid dengan contoh, dan meminta foto atau lokasi. Bila sinyal hilang, jawaban disimpan sebagai draf dan Fredd mengingatkan nanti.
+2. **Lapor lewat chat.** Fluctuz menghubungi penyuluh di WhatsApp atau Telegram, menanyakan isian satu pesan per pertanyaan, mengoreksi jawaban yang tidak valid dengan contoh, dan meminta foto atau lokasi. Bila sinyal hilang, jawaban disimpan sebagai draf dan Fluctuz mengingatkan nanti.
 3. **Pantau.** Laporan masuk ke dashboard secara real-time: tabel, peta sebaran, foto bukti, grafik tren, dan ekspor Excel. Admin bisa meninjau laporan dan mengambil alih percakapan bila perlu.
 
 ### Pengguna
@@ -31,12 +31,12 @@ Laporan lapangan (kondisi tanaman, serangan hama, luas tanam, hasil panen) umumn
 |---|---|---|
 | Admin, editor struktur, peninjau | Dashboard web | Menyusun struktur data, mengundang penyuluh, menghubungkan kanal, meninjau laporan, mengambil alih percakapan |
 | Penyuluh lapangan | WhatsApp / Telegram | Mengisi laporan; tidak perlu memasang aplikasi apa pun |
-| Fredd (agen AI) | Server | Menjalankan percakapan, validasi, pengingat, dan ringkasan |
+| Fluctuz (agen AI) | Server | Menjalankan percakapan, validasi, pengingat, dan ringkasan |
 | Pengunjung | Website publik | Membaca landing page dan mendaftar |
 
 ### Model bisnis
 
-Fredd dijual sebagai SaaS berlangganan dengan dua jenis workspace:
+Fluctuz dijual sebagai SaaS berlangganan dengan dua jenis workspace:
 
 | Jenis | Paket |
 |---|---|
@@ -87,7 +87,7 @@ Prinsip utama:
 
 ### Repositori
 
-Fredd terdiri dari tiga repo GitLab yang di-clone berdampingan dalam satu folder:
+Fluctuz terdiri dari tiga repo GitLab yang di-clone berdampingan dalam satu folder:
 
 | Repo | Isi |
 |---|---|
@@ -96,7 +96,7 @@ Fredd terdiri dari tiga repo GitLab yang di-clone berdampingan dalam satu folder
 | [infra](https://gitlab.com/databiota-fredd/infra) | Docker Compose, PostgreSQL, Redis, Caddy; nanti deploy dan backup |
 
 ```bash
-mkdir fredd && cd fredd
+mkdir fluctuz && cd fluctuz
 git clone https://gitlab.com/databiota-fredd/backend.git
 git clone https://gitlab.com/databiota-fredd/frontend.git
 git clone https://gitlab.com/databiota-fredd/infra.git
@@ -148,7 +148,7 @@ docker compose -f infra/docker-compose.yml up -d --wait
 
 | Layanan | Alamat host | Kredensial |
 |---|---|---|
-| PostgreSQL 17 | `127.0.0.1:5433` | `fredd` / `fredd`, database `fredd` (hanya untuk lokal) |
+| PostgreSQL 17 | `127.0.0.1:5433` | `fluctuz` / `fluctuz`, database `fluctuz` (hanya untuk lokal) |
 | Redis 8 | `127.0.0.1:6380` | tanpa kata sandi |
 
 ### Mode Docker

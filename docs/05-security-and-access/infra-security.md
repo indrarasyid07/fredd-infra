@@ -23,7 +23,7 @@ Model keamanan aplikasi: [backend/docs/05-security-and-access/security-model.md]
 ## Akses
 
 - Akses server lewat SSH key, tanpa login password, tanpa root langsung.
-- Akses database produksi hanya lewat role `fredd_readonly` untuk investigasi; perubahan data lewat aplikasi atau migrasi, bukan query manual.
+- Akses database produksi hanya lewat role `fluctuz_readonly` untuk investigasi; perubahan data lewat aplikasi atau migrasi, bukan query manual.
 - Backup terenkripsi; kunci dekripsi disimpan terpisah dari bucket backup.
 
 ## Pembaruan
