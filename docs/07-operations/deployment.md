@@ -39,7 +39,7 @@ Rollback: jalankan ulang dengan tag image sebelumnya. Migrasi yang tidak bisa di
 | Log | Semua layanan log JSON ke stdout; dikumpulkan driver log Docker atau agen penyedia |
 | Error | Error tracking (Sentry atau sejenis) di api, worker, web |
 | Health | `GET /api/v1/health` (DB + Redis), dipantau uptime checker eksternal tiap menit |
-| Metrik antrean | Panjang antrean arq, umur job tertua, pesan keluar gagal per jam; alarm bila job tertua > 5 menit |
+| Metrik antrean | Panjang antrean Taskiq, umur job tertua, pesan keluar gagal per jam; alarm bila job tertua > 5 menit |
 | Disk | Alarm bila volume Postgres > 80% |
 
 ## Jadwal

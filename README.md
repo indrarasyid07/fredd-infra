@@ -73,9 +73,9 @@ Browser ──► Caddy (satu domain)
               └── /*           → Next.js (website publik + dashboard)
 
 FastAPI ──► PostgreSQL   (data utama)
-        ──► Redis        (rate limit, antrean arq, event real-time)
+        ──► Redis        (rate limit, antrean Taskiq, event real-time)
         ──► S3-compatible (foto dan suara, menyusul)
-Worker arq ──► WhatsApp Cloud API, Telegram Bot API, LLM (menyusul)
+Worker Taskiq ──► WhatsApp Cloud API, Telegram Bot API, LLM (menyusul)
 ```
 
 Prinsip utama:

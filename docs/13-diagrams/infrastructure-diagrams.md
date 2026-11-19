@@ -12,7 +12,7 @@ flowchart LR
     caddy[Caddy :443]
     web[web: Next.js]
     api[api: FastAPI]
-    worker[worker: arq]
+    worker[worker: Taskiq]
     migrate[migrate: job sekali]
     pg[(postgres)]
     redis[(redis)]

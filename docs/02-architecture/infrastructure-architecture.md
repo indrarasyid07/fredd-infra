@@ -23,10 +23,11 @@ Hanya Caddy yang membuka port ke publik. Postgres dan Redis tidak pernah diberi 
 | `caddy` | `caddy:2` | `caddy-data` (sertifikat) | Satu-satunya pintu masuk |
 | `web` | dibangun dari `fredd-frontend/` | – | `node server.js` |
 | `api` | dibangun dari `fredd-backend/` | – | `uvicorn`, bisa lebih dari 1 replika |
-| `worker` | sama dengan `api` | – | `arq app.worker.WorkerSettings` |
+| `worker` | sama dengan `api` | – | `taskiq worker app.worker:broker` (Taskiq, Redis streams); bisa lebih dari 1 replika |
+| `scheduler` | sama dengan `api` | – | `taskiq scheduler app.worker:scheduler`: memulai cron. **Tepat satu** instance |
 | `migrate` | sama dengan `api` | – | Job satu kali `alembic upgrade head` sebelum `api`/`worker` start |
 | `postgres` | `postgis/postgis:17-3.5` (Postgres 17 + PostGIS) | `postgres-data` | |
-| `redis` | `redis:8` | `redis-data` | AOF aktif agar antrean tidak hilang saat restart |
+| `redis` | `redis:8` | `redis-data` | AOF aktif (`appendonly yes`, `appendfsync everysec`) agar antrean tidak hilang saat restart. **Ada (3.1)** |
 
 ## Lingkungan
 

@@ -41,7 +41,7 @@ Hentikan `api` dan `worker` sebelum restore ke produksi; jalankan `alembic upgra
 | Hal | Nilai |
 |---|---|
 | Versi | 8 |
-| Kegunaan | Antrean dan cron arq, pub/sub event SSE, rate limit |
+| Kegunaan | Antrean dan cron Taskiq, pub/sub event SSE, rate limit |
 | Persistensi | AOF `appendfsync everysec` di staging/produksi agar job antrean tidak hilang saat restart |
 | Memori | `maxmemory` disetel; kebijakan `noeviction` (antrean tidak boleh dibuang diam-diam) |
 
