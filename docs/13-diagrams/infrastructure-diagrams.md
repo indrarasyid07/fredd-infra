@@ -40,7 +40,7 @@ flowchart LR
   next -->|rewrite /api| uvicorn[uvicorn :8000]
   uvicorn --> pg[(postgres 127.0.0.1:5433)]
   uvicorn --> redis[(redis 127.0.0.1:6380)]
-  subgraph docker[infra/docker-compose.yml]
+  subgraph docker[fredd-infra/docker-compose.yml]
     pg
     redis
   end

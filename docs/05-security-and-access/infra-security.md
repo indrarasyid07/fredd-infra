@@ -1,6 +1,6 @@
 # Infra Security
 
-Model keamanan aplikasi: [backend/docs/05-security-and-access/security-model.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/05-security-and-access/security-model.md).
+Model keamanan aplikasi: [fredd-backend/docs/05-security-and-access/security-model.md](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/05-security-and-access/security-model.md).
 
 ## Eksposur jaringan
 

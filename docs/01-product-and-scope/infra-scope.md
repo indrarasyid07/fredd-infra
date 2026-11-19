@@ -1,6 +1,6 @@
 # Infra Scope
 
-## Yang diurus `infra/`
+## Yang diurus `fredd-infra/`
 
 | Hal | Status |
 |---|---|
@@ -15,10 +15,10 @@
 
 | Hal | Tempat |
 |---|---|
-| Migrasi skema (Alembic) | `backend/migrations` (berubah bersama model) |
+| Migrasi skema (Alembic) | `fredd-backend/alembic` (berubah bersama model) |
 | Seed data | `backend` (`scripts/seed.py`, data di `fixtures/`) |
-| Dockerfile aplikasi | `backend/` dan `frontend/` (dibangun dari kode masing-masing) |
-| Variabel env aplikasi | `backend/.env.example`, `frontend/.env.example` |
+| Dockerfile aplikasi | `fredd-backend/` dan `fredd-frontend/` (dibangun dari kode masing-masing) |
+| Variabel env aplikasi | `fredd-backend/.env.example`, `fredd-frontend/.env.example` |
 
 ## Pertanyaan terbuka
 
