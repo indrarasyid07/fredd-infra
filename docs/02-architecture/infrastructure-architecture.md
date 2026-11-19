@@ -25,7 +25,7 @@ Hanya Caddy yang membuka port ke publik. Postgres dan Redis tidak pernah diberi 
 | `api` | dibangun dari `backend/` | – | `uvicorn`, bisa lebih dari 1 replika |
 | `worker` | sama dengan `api` | – | `arq app.worker.WorkerSettings` |
 | `migrate` | sama dengan `api` | – | Job satu kali `alembic upgrade head` sebelum `api`/`worker` start |
-| `postgres` | `postgres:17` | `postgres-data` | |
+| `postgres` | `postgis/postgis:17-3.5` (Postgres 17 + PostGIS) | `postgres-data` | |
 | `redis` | `redis:8` | `redis-data` | AOF aktif agar antrean tidak hilang saat restart |
 
 ## Lingkungan
