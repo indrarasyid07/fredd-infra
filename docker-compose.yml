@@ -24,6 +24,11 @@ services:
 
   redis:
     image: redis:8
+    # The job queue lives in Redis: append-only file, synced every second, so queued jobs and
+    # unacknowledged messages survive a restart.
+    command: ["redis-server", "--appendonly", "yes", "--appendfsync", "everysec"]
+    volumes:
+      - redis-data:/data
     ports:
       - "127.0.0.1:${REDIS_PORT:-6380}:6379"
     healthcheck:
@@ -68,6 +73,30 @@ services:
       redis:
         condition: service_healthy
 
+  # Background jobs (Taskiq): chat processing, emails with retry. Scale with `--scale worker=N`.
+  worker:
+    profiles: [app]
+    build: ../backend
+    image: fluctuz-api
+    command: ["taskiq", "worker", "app.worker:broker"]
+    environment: *api-env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  # Starts cron jobs. Exactly one instance, or each job would run twice.
+  scheduler:
+    profiles: [app]
+    build: ../backend
+    image: fluctuz-api
+    command: ["taskiq", "scheduler", "app.worker:scheduler"]
+    environment: *api-env
+    depends_on:
+      redis:
+        condition: service_healthy
+
   web:
     profiles: [app]
     build:
@@ -95,3 +124,4 @@ services:
 
 volumes:
   postgres-data:
+  redis-data:
