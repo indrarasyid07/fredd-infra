@@ -1,6 +1,6 @@
 # Local Development
 
-Semua perintah dijalankan dari folder induk yang berisi `backend/`, `frontend/`, dan `infra/`.
+Semua perintah dijalankan dari folder induk yang berisi `fredd-backend/`, `fredd-frontend/`, dan `fredd-infra/`.
 
 ## Dua mode
 
@@ -15,7 +15,7 @@ Semua perintah dijalankan dari folder induk yang berisi `backend/`, `frontend/`,
 ### Native
 
 ```bash
-docker compose -f infra/docker-compose.yml up -d --wait
+docker compose -f fredd-infra/docker-compose.yml up -d --wait
 ```
 
 Lalu jalankan backend (`uv run uvicorn …`) dan frontend (`npm run dev`) sesuai README masing-masing.
@@ -28,7 +28,7 @@ Lalu jalankan backend (`uv run uvicorn …`) dan frontend (`npm run dev`) sesuai
 ### Docker
 
 ```bash
-docker compose -f infra/docker-compose.yml --profile app up -d --build --wait
+docker compose -f fredd-infra/docker-compose.yml --profile app up -d --build --wait
 ```
 
 Urutan start: `postgres` dan `redis` sehat → `migrate` menjalankan `alembic upgrade head` lalu keluar → `api` dan `web` sehat → `caddy` membuka port 8080.
@@ -37,32 +37,32 @@ Jangan menjalankan kedua mode sekaligus dengan port yang sama: Postgres dan Redi
 
 ## Mengubah port
 
-Salin `infra/.env.example` menjadi `infra/.env`, lalu ubah `POSTGRES_PORT`, `REDIS_PORT`, atau `APP_PORT`. Bila port Postgres/Redis diubah, sesuaikan juga `backend/.env`.
+Salin `fredd-infra/.env.example` menjadi `fredd-infra/.env`, lalu ubah `POSTGRES_PORT`, `REDIS_PORT`, atau `APP_PORT`. Bila port Postgres/Redis diubah, sesuaikan juga `fredd-backend/.env`.
 
 ## Catatan Windows
 
 - Pakai `127.0.0.1`, bukan `localhost`, untuk Postgres dan Redis. Windows mendahulukan IPv6 (`::1`), sedangkan container hanya mendengarkan IPv4; koneksi Redis akan timeout.
 - Bila port masih terpakai, cek dengan `netstat -ano | findstr :5433`.
-- Port aplikasi native 8000 (API) dan 3000 (web) sering dipakai proyek lain; jalankan dengan `--port` lain dan set `API_INTERNAL_URL` di `frontend/.env.local`, atau pakai mode Docker.
+- Port aplikasi native 8000 (API) dan 3000 (web) sering dipakai proyek lain; jalankan dengan `--port` lain dan set `API_INTERNAL_URL` di `fredd-frontend/.env.local`, atau pakai mode Docker.
 
 ## Perintah berguna
 
 ```bash
 # status dan log
-docker compose -f infra/docker-compose.yml --profile app ps
-docker compose -f infra/docker-compose.yml --profile app logs -f api
+docker compose -f fredd-infra/docker-compose.yml --profile app ps
+docker compose -f fredd-infra/docker-compose.yml --profile app logs -f api
 
 # psql ke database dev
-docker compose -f infra/docker-compose.yml exec postgres psql -U fluctuz
+docker compose -f fredd-infra/docker-compose.yml exec postgres psql -U fluctuz
 
 # redis-cli
-docker compose -f infra/docker-compose.yml exec redis redis-cli
+docker compose -f fredd-infra/docker-compose.yml exec redis redis-cli
 
 # bangun ulang satu image setelah kode berubah
-docker compose -f infra/docker-compose.yml --profile app up -d --build web
+docker compose -f fredd-infra/docker-compose.yml --profile app up -d --build web
 
 # hentikan; tambahkan -v untuk menghapus data
-docker compose -f infra/docker-compose.yml --profile app down
+docker compose -f fredd-infra/docker-compose.yml --profile app down
 ```
 
 `--profile app` pada `down` diperlukan agar container mode Docker ikut dihentikan.

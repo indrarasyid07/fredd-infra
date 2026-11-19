@@ -43,7 +43,7 @@ Fluctuz dijual sebagai SaaS berlangganan dengan dua jenis workspace:
 | Perorangan | Gratis, Plus |
 | Organisasi | Starter, Growth, Enterprise |
 
-Paket membatasi jumlah anggota, struktur data aktif, dan laporan per bulan; tagihan bulanan atau tahunan. Rincian: [billing-and-plans.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/06-domain-guides/billing-and-plans.md).
+Paket membatasi jumlah anggota, struktur data aktif, dan laporan per bulan; tagihan bulanan atau tahunan. Rincian: [billing-and-plans.md](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/06-domain-guides/billing-and-plans.md).
 
 ### Status pengembangan (14 November 2026)
 
@@ -60,7 +60,7 @@ Paket membatasi jumlah anggota, struktur data aktif, dan laporan per bulan; tagi
 | WhatsApp Cloud API | Belum (menunggu verifikasi bisnis Meta) |
 | Paket dan tagihan | Belum |
 
-Urutan lengkap: [roadmap backend](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/10-roadmap/roadmap.md) dan [roadmap frontend](https://gitlab.com/databiota-fredd/frontend/-/blob/development/docs/10-roadmap/roadmap.md).
+Urutan lengkap: [roadmap backend](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/10-roadmap/roadmap.md) dan [roadmap frontend](https://github.com/indrarasyid07/fredd-frontend/blob/development/docs/10-roadmap/roadmap.md).
 
 ## Gambaran teknis
 
@@ -87,20 +87,22 @@ Prinsip utama:
 
 ### Repositori
 
-Fluctuz terdiri dari tiga repo GitLab yang di-clone berdampingan dalam satu folder:
+Fluctuz terdiri dari tiga repo GitHub yang di-clone berdampingan dalam satu folder:
 
 | Repo | Isi |
 |---|---|
-| [backend](https://gitlab.com/databiota-fredd/backend) | API FastAPI, worker, migrasi database, tes |
-| [frontend](https://gitlab.com/databiota-fredd/frontend) | Next.js: website publik (SEO) dan dashboard `/app` |
-| [infra](https://gitlab.com/databiota-fredd/infra) | Docker Compose, PostgreSQL, Redis, Caddy; nanti deploy dan backup |
+| [fredd-backend](https://github.com/indrarasyid07/fredd-backend) | API FastAPI, worker, migrasi database, tes |
+| [fredd-frontend](https://github.com/indrarasyid07/fredd-frontend) | Next.js: website publik (SEO) dan dashboard `/app` |
+| [fredd-infra](https://github.com/indrarasyid07/fredd-infra) | Docker Compose, PostgreSQL, Redis, Caddy; nanti deploy dan backup |
 
 ```bash
 mkdir fluctuz && cd fluctuz
-git clone https://gitlab.com/databiota-fredd/backend.git
-git clone https://gitlab.com/databiota-fredd/frontend.git
-git clone https://gitlab.com/databiota-fredd/infra.git
+git clone -b development https://github.com/indrarasyid07/fredd-backend.git
+git clone -b development https://github.com/indrarasyid07/fredd-frontend.git
+git clone -b development https://github.com/indrarasyid07/fredd-infra.git
 ```
+
+Nama folder harus sama dengan nama repo: compose membangun image dari `../fredd-backend` dan `../fredd-frontend`, dan `npm run api:types` membaca `../fredd-backend/openapi.json`. Clone dengan `-b development` karena semua pekerjaan ada di cabang itu.
 
 ### Tech stack
 
@@ -122,28 +124,28 @@ Dua cara, keduanya dari folder induk yang berisi ketiga repo:
 
 | Cara | Untuk | Perintah |
 |---|---|---|
-| **Native** | Coding sehari-hari dengan hot reload | `docker compose -f infra/docker-compose.yml up -d --wait`, lalu jalankan backend dan frontend dengan perintah di README masing-masing |
-| **Docker** | Mencoba seluruh aplikasi tanpa memasang Python/Node | `docker compose -f infra/docker-compose.yml --profile app up -d --build --wait`, lalu buka http://localhost:8080 |
+| **Native** | Coding sehari-hari dengan hot reload | `docker compose -f fredd-infra/docker-compose.yml up -d --wait`, lalu jalankan backend dan frontend dengan perintah di README masing-masing |
+| **Docker** | Mencoba seluruh aplikasi tanpa memasang Python/Node | `docker compose -f fredd-infra/docker-compose.yml --profile app up -d --build --wait`, lalu buka http://localhost:8080 |
 
 ### Kontribusi
 
-- Pesan commit mengikuti [commit-conventions.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/commit-conventions.md) (Conventional Commits, Bahasa Inggris).
-- Dokumentasi mengikuti [documentation-guidelines.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/documentation-guidelines.md).
+- Pesan commit mengikuti [commit-conventions.md](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/00-governance/commit-conventions.md) (Conventional Commits, Bahasa Inggris).
+- Dokumentasi mengikuti [documentation-guidelines.md](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/00-governance/documentation-guidelines.md).
 - File `.env`, hasil build, dan data lapangan tidak pernah di-commit.
-- Cabang utama adalah `development` (default di GitLab); semua pekerjaan masuk ke sana. `main` berisi commit awal dan hanya diperbarui lewat merge dari `development` ([aturan cabang](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/commit-conventions.md#cabang)).
+- Cabang utama adalah `development` (default di GitHub); semua pekerjaan masuk ke sana. `main` berisi commit awal dan hanya diperbarui lewat merge dari `development` ([aturan cabang](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/00-governance/commit-conventions.md#cabang)).
 
 ## Repo ini: infra
 
 Layanan pendukung yang dipakai bersama backend dan frontend: PostgreSQL, Redis, reverse proxy Caddy, dan Docker Compose untuk menjalankan semuanya di lokal. Compose production dan backup menyusul.
 
-Semua perintah dijalankan dari folder induk yang berisi `backend/`, `frontend/`, dan `infra/`.
+Semua perintah dijalankan dari folder induk yang berisi `fredd-backend/`, `fredd-frontend/`, dan `fredd-infra/`.
 
 ### Mode native
 
 Hanya menyalakan PostgreSQL dan Redis; backend dan frontend dijalankan dengan perintah di README masing-masing.
 
 ```bash
-docker compose -f infra/docker-compose.yml up -d --wait
+docker compose -f fredd-infra/docker-compose.yml up -d --wait
 ```
 
 | Layanan | Alamat host | Kredensial |
@@ -156,7 +158,7 @@ docker compose -f infra/docker-compose.yml up -d --wait
 Membangun image backend dan frontend, menjalankan migrasi, dan menyajikan semuanya di belakang Caddy.
 
 ```bash
-docker compose -f infra/docker-compose.yml --profile app up -d --build --wait
+docker compose -f fredd-infra/docker-compose.yml --profile app up -d --build --wait
 ```
 
 - Aplikasi: http://localhost:8080
@@ -166,8 +168,8 @@ docker compose -f infra/docker-compose.yml --profile app up -d --build --wait
 |---|---|
 | `postgres`, `redis` | Sama seperti mode native |
 | `migrate` | Menjalankan `alembic upgrade head` sekali lalu berhenti |
-| `api` | Image FastAPI dari `backend/Dockerfile` |
-| `web` | Image Next.js standalone dari `frontend/Dockerfile` |
+| `api` | Image FastAPI dari `fredd-backend/Dockerfile` |
+| `web` | Image Next.js standalone dari `fredd-frontend/Dockerfile` |
 | `caddy` | `/api` dan `/webhooks` ke `api`, sisanya ke `web` ([caddy/Caddyfile](caddy/Caddyfile)) |
 
 Image adalah build produksi: perubahan kode butuh `--build` lagi. Pakai mode native untuk hot reload.
@@ -175,17 +177,17 @@ Image adalah build produksi: perubahan kode butuh `--build` lagi. Pakai mode nat
 ### Perintah umum
 
 ```bash
-docker compose -f infra/docker-compose.yml --profile app ps          # status
-docker compose -f infra/docker-compose.yml --profile app logs -f api # log satu layanan
-docker compose -f infra/docker-compose.yml --profile app down        # hentikan semua
-docker compose -f infra/docker-compose.yml --profile app down -v     # hentikan dan hapus data database
+docker compose -f fredd-infra/docker-compose.yml --profile app ps          # status
+docker compose -f fredd-infra/docker-compose.yml --profile app logs -f api # log satu layanan
+docker compose -f fredd-infra/docker-compose.yml --profile app down        # hentikan semua
+docker compose -f fredd-infra/docker-compose.yml --profile app down -v     # hentikan dan hapus data database
 ```
 
 ### Port
 
-Default: PostgreSQL 5433, Redis 6380, aplikasi 8080, semuanya hanya di `127.0.0.1`. Untuk mengubah, salin `infra/.env.example` ke `infra/.env` lalu ubah nilainya. Dari Windows pakai `127.0.0.1`, bukan `localhost`.
+Default: PostgreSQL 5433, Redis 6380, aplikasi 8080, semuanya hanya di `127.0.0.1`. Untuk mengubah, salin `fredd-infra/.env.example` ke `fredd-infra/.env` lalu ubah nilainya. Dari Windows pakai `127.0.0.1`, bukan `localhost`.
 
-Migrasi database ada di `backend/alembic`, bersebelahan dengan model yang dijelaskannya.
+Migrasi database ada di `fredd-backend/alembic`, bersebelahan dengan model yang dijelaskannya.
 
 ### Isi repo
 
