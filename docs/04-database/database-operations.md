@@ -1,6 +1,6 @@
 # Database Operations
 
-Model data dan konvensi skema: [backend/docs/04-database/data-model.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/04-database/data-model.md). Dokumen ini tentang menjalankan databasenya.
+Model data dan konvensi skema: [fredd-backend/docs/04-database/data-model.md](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/04-database/data-model.md). Dokumen ini tentang menjalankan databasenya.
 
 ## PostgreSQL
 
@@ -41,7 +41,7 @@ Hentikan `api` dan `worker` sebelum restore ke produksi; jalankan `alembic upgra
 | Hal | Nilai |
 |---|---|
 | Versi | 8 |
-| Kegunaan | Antrean dan cron arq, pub/sub event SSE, rate limit |
+| Kegunaan | Antrean dan cron Taskiq, pub/sub event SSE, rate limit |
 | Persistensi | AOF `appendfsync everysec` di staging/produksi agar job antrean tidak hilang saat restart |
 | Memori | `maxmemory` disetel; kebijakan `noeviction` (antrean tidak boleh dibuang diam-diam) |
 

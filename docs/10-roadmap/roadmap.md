@@ -1,6 +1,6 @@
 # Roadmap
 
-Disejajarkan dengan [roadmap backend](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/10-roadmap/roadmap.md).
+Disejajarkan dengan [roadmap backend](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/10-roadmap/roadmap.md).
 
 | Fase | Infra | Selesai bila |
 |---|---|---|

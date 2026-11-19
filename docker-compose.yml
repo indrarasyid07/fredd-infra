@@ -1,14 +1,14 @@
 # Local development. Two ways to run (see README.md):
-#   docker compose -f infra/docker-compose.yml up -d --wait                  -> Postgres + Redis only; run api/web natively
-#   docker compose -f infra/docker-compose.yml --profile app up -d --build --wait -> full stack behind Caddy
-# Build contexts assume backend/, frontend/ and infra/ are cloned side by side.
-# Host ports 5433/6380 avoid clashing with a native Postgres/Redis; override any host port via infra/.env.
+#   docker compose -f fredd-infra/docker-compose.yml up -d --wait                  -> Postgres + Redis only; run api/web natively
+#   docker compose -f fredd-infra/docker-compose.yml --profile app up -d --build --wait -> full stack behind Caddy
+# Build contexts assume fredd-backend/, fredd-frontend/ and fredd-infra/ are cloned side by side.
+# Host ports 5433/6380 avoid clashing with a native Postgres/Redis; override any host port via fredd-infra/.env.
 # Fixed project name keeps container and volume names stable regardless of folder.
 name: fluctuz
 
 services:
   postgres:
-    image: postgres:17
+    image: postgis/postgis:17-3.5
     environment:
       POSTGRES_USER: fluctuz
       POSTGRES_PASSWORD: fluctuz
@@ -40,7 +40,7 @@ services:
 
   migrate:
     profiles: [app]
-    build: ../backend
+    build: ../fredd-backend
     image: fluctuz-api
     command: ["alembic", "upgrade", "head"]
     environment: &api-env
@@ -64,7 +64,7 @@ services:
 
   api:
     profiles: [app]
-    build: ../backend
+    build: ../fredd-backend
     image: fluctuz-api
     environment: *api-env
     depends_on:
@@ -76,7 +76,7 @@ services:
   # Background jobs (Taskiq): chat processing, emails with retry. Scale with `--scale worker=N`.
   worker:
     profiles: [app]
-    build: ../backend
+    build: ../fredd-backend
     image: fluctuz-api
     command: ["taskiq", "worker", "app.worker:broker"]
     environment: *api-env
@@ -89,7 +89,7 @@ services:
   # Starts cron jobs. Exactly one instance, or each job would run twice.
   scheduler:
     profiles: [app]
-    build: ../backend
+    build: ../fredd-backend
     image: fluctuz-api
     command: ["taskiq", "scheduler", "app.worker:scheduler"]
     environment: *api-env
@@ -100,7 +100,7 @@ services:
   web:
     profiles: [app]
     build:
-      context: ../frontend
+      context: ../fredd-frontend
       args:
         NEXT_PUBLIC_SITE_URL: http://localhost:${APP_PORT:-8080}
         SITE_ENV: development

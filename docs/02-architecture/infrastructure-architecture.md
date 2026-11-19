@@ -21,20 +21,20 @@ Hanya Caddy yang membuka port ke publik. Postgres dan Redis tidak pernah diberi 
 | Layanan | Image | Volume | Catatan |
 |---|---|---|---|
 | `caddy` | `caddy:2` | `caddy-data` (sertifikat) | Satu-satunya pintu masuk |
-| `web` | dibangun dari `frontend/` | – | `node server.js` |
-| `api` | dibangun dari `backend/` | – | `uvicorn`, bisa lebih dari 1 replika |
+| `web` | dibangun dari `fredd-frontend/` | – | `node server.js` |
+| `api` | dibangun dari `fredd-backend/` | – | `uvicorn`, bisa lebih dari 1 replika |
 | `worker` | sama dengan `api` | – | `taskiq worker app.worker:broker` (Taskiq, Redis streams); bisa lebih dari 1 replika |
 | `scheduler` | sama dengan `api` | – | `taskiq scheduler app.worker:scheduler`: memulai cron. **Tepat satu** instance |
 | `migrate` | sama dengan `api` | – | Job satu kali `alembic upgrade head` sebelum `api`/`worker` start |
-| `postgres` | `postgres:17` | `postgres-data` | |
+| `postgres` | `postgis/postgis:17-3.5` (Postgres 17 + PostGIS) | `postgres-data` | |
 | `redis` | `redis:8` | `redis-data` | AOF aktif (`appendonly yes`, `appendfsync everysec`) agar antrean tidak hilang saat restart. **Ada (3.1)** |
 
 ## Lingkungan
 
 | Lingkungan | Isi | Domain |
 |---|---|---|
-| development (native) | `infra/docker-compose.yml` (Postgres + Redis); api dan web jalan native | `localhost` |
-| development (Docker) | `infra/docker-compose.yml --profile app`: + migrate, api, web, Caddy | `localhost:8080` |
+| development (native) | `fredd-infra/docker-compose.yml` (Postgres + Redis); api dan web jalan native | `localhost` |
+| development (Docker) | `fredd-infra/docker-compose.yml --profile app`: + migrate, api, web, Caddy | `localhost:8080` |
 | staging | Compose produksi + seed `demo` | `staging.<domain>` |
 | production | Compose produksi | `<domain>` |
 
@@ -46,4 +46,4 @@ Hanya Caddy yang membuka port ke publik. Postgres dan Redis tidak pernah diberi 
 | Redis | 6380 | 6379 sering dipakai Redis native |
 | App (profile `app`, lewat Caddy) | 8080 | Tidak bentrok dengan 3000/8000 yang sering dipakai |
 
-Semua port bisa diubah lewat `infra/.env` (lihat `.env.example`). Port hanya di-bind ke `127.0.0.1`. Di mode Docker, `api` dan `web` tidak membuka port host; semua lewat Caddy seperti produksi. Nama project compose dikunci `fluctuz` agar nama container dan volume tidak tergantung nama folder.
+Semua port bisa diubah lewat `fredd-infra/.env` (lihat `.env.example`). Port hanya di-bind ke `127.0.0.1`. Di mode Docker, `api` dan `web` tidak membuka port host; semua lewat Caddy seperti produksi. Nama project compose dikunci `fluctuz` agar nama container dan volume tidak tergantung nama folder.

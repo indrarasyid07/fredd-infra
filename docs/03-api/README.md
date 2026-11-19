@@ -1,6 +1,6 @@
 # Routing
 
-Infra tidak punya API sendiri. Kontrak API ada di [backend/docs/03-api](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/03-api/api-conventions.md).
+Infra tidak punya API sendiri. Kontrak API ada di [fredd-backend/docs/03-api](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/03-api/api-conventions.md).
 
 Aturan routing reverse proxy (Caddy). Versi lokal sudah ada di [`caddy/Caddyfile`](../../caddy/Caddyfile) dan dipakai mode Docker:
 

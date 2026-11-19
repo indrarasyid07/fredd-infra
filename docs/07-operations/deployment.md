@@ -1,11 +1,11 @@
 # Deployment
 
-Konfigurasi khusus aplikasi (env, migrasi, zona waktu) ada di [backend deployment](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/07-operations/deployment.md) dan [frontend deployment](https://gitlab.com/databiota-fredd/frontend/-/blob/development/docs/07-operations/deployment.md).
+Konfigurasi khusus aplikasi (env, migrasi, zona waktu) ada di [backend deployment](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/07-operations/deployment.md) dan [frontend deployment](https://github.com/indrarasyid07/fredd-frontend/blob/development/docs/07-operations/deployment.md).
 
 ## Berkas
 
 ```
-infra/
+fredd-infra/
 ├── docker-compose.yml        # development: native (postgres, redis) + profile app (migrate, api, web, caddy)   [ada]
 ├── caddy/Caddyfile           # routing lokal; produksi menambah domain dan TLS                                  [ada]
 ├── .env.example              # port host lokal                                                                   [ada]
@@ -13,12 +13,12 @@ infra/
 └── scripts/backup.sh         # pg_dump terenkripsi ke object storage                                             [fase deploy]
 ```
 
-Image aplikasi dibangun dari `backend/Dockerfile` dan `frontend/Dockerfile`; keduanya sudah dipakai mode Docker lokal, jadi compose produksi cukup memakai image yang sama dengan env produksi.
+Image aplikasi dibangun dari `fredd-backend/Dockerfile` dan `fredd-frontend/Dockerfile`; keduanya sudah dipakai mode Docker lokal, jadi compose produksi cukup memakai image yang sama dengan env produksi.
 
 ## Urutan deploy
 
-1. Build image `api` (dari `backend/`) dan `web` (dari `frontend/`), beri tag commit.
-2. `docker compose -f infra/docker-compose.prod.yml pull` / `build`.
+1. Build image `api` (dari `fredd-backend/`) dan `web` (dari `fredd-frontend/`), beri tag commit.
+2. `docker compose -f fredd-infra/docker-compose.prod.yml pull` / `build`.
 3. Jalankan job `migrate` (sekali, sebelum replika lain).
 4. `up -d` untuk `api`, `worker`, `web`; Caddy tetap jalan.
 5. Cek `GET /api/v1/health` dan halaman utama.
@@ -39,7 +39,7 @@ Rollback: jalankan ulang dengan tag image sebelumnya. Migrasi yang tidak bisa di
 | Log | Semua layanan log JSON ke stdout; dikumpulkan driver log Docker atau agen penyedia |
 | Error | Error tracking (Sentry atau sejenis) di api, worker, web |
 | Health | `GET /api/v1/health` (DB + Redis), dipantau uptime checker eksternal tiap menit |
-| Metrik antrean | Panjang antrean arq, umur job tertua, pesan keluar gagal per jam; alarm bila job tertua > 5 menit |
+| Metrik antrean | Panjang antrean Taskiq, umur job tertua, pesan keluar gagal per jam; alarm bila job tertua > 5 menit |
 | Disk | Alarm bila volume Postgres > 80% |
 
 ## Jadwal

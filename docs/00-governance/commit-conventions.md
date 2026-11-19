@@ -1,6 +1,6 @@
 # Commit Conventions
 
-Aturan lengkap (format, type, subject, body, footer, larangan, contoh) ada di backend: [commit-conventions.md](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/commit-conventions.md). Ringkasnya:
+Aturan lengkap (format, type, subject, body, footer, larangan, contoh) ada di backend: [commit-conventions.md](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/00-governance/commit-conventions.md). Ringkasnya:
 
 ```
 <type>(<scope>): <subject>     ← Bahasa Inggris, kalimat perintah, huruf kecil, tanpa titik, ≤ 72 karakter
@@ -16,7 +16,7 @@ Dilarang di pesan commit: baris atribusi AI/alat (`Co-Authored-By: Claude ...`, 
 
 ## Cabang
 
-`development` adalah cabang utama (default di GitLab); semua commit harian masuk ke sana. `main` adalah cabang rilis, berisi commit awal, dan hanya diperbarui lewat merge dari `development`. Jangan commit langsung ke `main`. Aturan lengkap: [backend](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/00-governance/commit-conventions.md#cabang).
+`development` adalah cabang utama (default di GitHub); semua commit harian masuk ke sana. `main` adalah cabang rilis, berisi commit awal, dan hanya diperbarui lewat merge dari `development`. Jangan commit langsung ke `main`. Aturan lengkap: [backend](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/00-governance/commit-conventions.md#cabang).
 
 ## Scope infra
 

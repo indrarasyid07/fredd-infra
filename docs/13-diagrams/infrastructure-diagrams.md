@@ -12,7 +12,7 @@ flowchart LR
     caddy[Caddy :443]
     web[web: Next.js]
     api[api: FastAPI]
-    worker[worker: arq]
+    worker[worker: Taskiq]
     migrate[migrate: job sekali]
     pg[(postgres)]
     redis[(redis)]
@@ -40,7 +40,7 @@ flowchart LR
   next -->|rewrite /api| uvicorn[uvicorn :8000]
   uvicorn --> pg[(postgres 127.0.0.1:5433)]
   uvicorn --> redis[(redis 127.0.0.1:6380)]
-  subgraph docker[infra/docker-compose.yml]
+  subgraph docker[fredd-infra/docker-compose.yml]
     pg
     redis
   end

@@ -5,7 +5,7 @@ Dokumentasi infrastruktur pendukung Fluctuz: database, Redis, reverse proxy, dep
 | Folder | Isi |
 |---|---|
 | [00-governance](00-governance/README.md) | Aturan dokumentasi (sama dengan backend); [standar pesan commit](00-governance/commit-conventions.md) |
-| [01-product-and-scope](01-product-and-scope/infra-scope.md) | Apa yang diurus folder `infra/` dan apa yang tidak |
+| [01-product-and-scope](01-product-and-scope/infra-scope.md) | Apa yang diurus folder `fredd-infra/` dan apa yang tidak |
 | [02-architecture](02-architecture/infrastructure-architecture.md) | Topologi layanan, jaringan, volume, lingkungan |
 | [03-api](03-api/README.md) | Aturan routing reverse proxy |
 | [04-database](04-database/database-operations.md) | PostgreSQL dan Redis: versi, role, konfigurasi, backup, restore |
@@ -21,4 +21,4 @@ Dokumentasi infrastruktur pendukung Fluctuz: database, Redis, reverse proxy, dep
 | [14-agent-guides](14-agent-guides/agent-guidelines.md) | Panduan AI coding agent |
 | [99-archive](99-archive/README.md) | Dokumen lama |
 
-Dokumentasi aplikasi: [backend/docs](https://gitlab.com/databiota-fredd/backend/-/blob/development/docs/README.md), [frontend/docs](https://gitlab.com/databiota-fredd/frontend/-/blob/development/docs/README.md).
+Dokumentasi aplikasi: [fredd-backend/docs](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/README.md), [fredd-frontend/docs](https://github.com/indrarasyid07/fredd-frontend/blob/development/docs/README.md).
