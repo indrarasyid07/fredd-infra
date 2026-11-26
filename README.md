@@ -75,8 +75,10 @@ Browser ──► Caddy (satu domain)
 FastAPI ──► PostgreSQL   (data utama)
         ──► Redis        (rate limit, antrean Taskiq, event real-time)
         ──► S3-compatible (foto dan suara, menyusul)
-Worker Taskiq ──► WhatsApp Cloud API, Telegram Bot API, LLM (menyusul)
+Worker Taskiq ──► WhatsApp Cloud API, Telegram Bot API, OpenAI (LLM + STT, opsional)
 ```
+
+OpenAI mati secara bawaan (`LLM_PROVIDER=off`, `STT_PROVIDER=fake`). Untuk menyalakannya, isi `LLM_PROVIDER`, `STT_PROVIDER`, dan `OPENAI_API_KEY` di `.env` (contoh di `.env.example`); daftar lengkapnya ada di [deployment backend](https://github.com/indrarasyid07/fredd-backend/blob/development/docs/07-operations/deployment.md#konfigurasi-env).
 
 Prinsip utama:
 
