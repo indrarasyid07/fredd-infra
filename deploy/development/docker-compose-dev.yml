@@ -86,6 +86,17 @@ services:
     depends_on:
       redis: { condition: service_healthy }
 
+  # Temporary, until the server has a domain with TLS: Telegram only calls https webhooks, so the
+  # bot long-polls getUpdates instead (scripts.telegram_poll). Exactly one instance. Remove this
+  # service and register the webhook once https://<domain>/webhooks/telegram exists.
+  telegram-poll:
+    <<: *api
+    command: ["python", "-m", "scripts.telegram_poll"]
+    healthcheck: { test: ["CMD-SHELL", "kill -0 1"], interval: 30s }
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
   web:
     image: ghcr.io/indrarasyid07/fredd-web:${WEB_TAG:-development}
     restart: unless-stopped
