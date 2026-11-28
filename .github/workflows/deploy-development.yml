@@ -1,0 +1,44 @@
+name: deploy-development
+
+# A change to the development server's compose file, deploy script or Caddyfile is applied
+# without rebuilding anything (images stay as they are). See docs/07-operations/deployment.md.
+on:
+  push:
+    branches: [development]
+    paths:
+      - deploy/development/**
+      - caddy/Caddyfile
+      - .github/workflows/deploy-development.yml
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-development
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate compose file
+        run: |
+          cp deploy/development/.env.example deploy/development/.env
+          docker compose -f deploy/development/docker-compose-dev.yml config --quiet
+      - name: Deploy to the server
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          target="$DEPLOY_USER@$DEPLOY_HOST"
+          d=deploy/development
+          scp "$d/docker-compose-dev.yml" "$d/deploy.sh" "$d/.env.example" caddy/Caddyfile "$target:/opt/fluctuz/"
+          ssh "$target" "bash /opt/fluctuz/deploy.sh"

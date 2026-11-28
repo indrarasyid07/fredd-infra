@@ -1,0 +1,111 @@
+# Development server (branch `development`), deployed by GitHub Actions; see
+# docs/07-operations/deployment.md "Server development". Lives in /opt/fluctuz on the server next
+# to its .env (copy of .env.example) and Caddyfile; images come from GHCR, nothing is built here.
+# The host already runs nginx on 80/443 for other projects, so Caddy listens on APP_PORT only.
+name: fluctuz-dev
+
+x-api: &api
+  image: ghcr.io/indrarasyid07/fredd-api:${API_TAG:-development}
+  restart: unless-stopped
+  # Every backend setting (SMTP_*, TELEGRAM_*, OPENAI_API_KEY, ...) comes straight from the
+  # server's .env, so a new env var in fredd-backend needs no change here: add it to
+  # /opt/fluctuz/.env and fredd-backend/.env.example.
+  env_file: .env
+  # Wiring owned by this file; wins over the same names in .env.
+  environment:
+    # "development" keeps session cookies working over plain http (no domain/TLS yet) and logs
+    # emails when SMTP_HOST is empty. Set ENVIRONMENT=staging in .env once a domain with TLS exists.
+    ENVIRONMENT: ${ENVIRONMENT:-development}
+    DATABASE_URL: postgresql+asyncpg://fluctuz:${POSTGRES_PASSWORD:?set in .env}@postgres:5432/fluctuz
+    REDIS_URL: redis://redis:6379/0
+    APP_BASE_URL: ${APP_BASE_URL:?set in .env}
+    MEDIA_DIR: /app/var/media
+  volumes:
+    - media-data:/app/var/media
+  logging: &logging
+    driver: json-file
+    options: { max-size: 10m, max-file: "5" }
+
+services:
+  postgres:
+    image: postgis/postgis:17-3.5
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: fluctuz
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      POSTGRES_DB: fluctuz
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fluctuz"]
+      interval: 5s
+      retries: 10
+    logging: *logging
+
+  redis:
+    image: redis:8
+    restart: unless-stopped
+    # Job queue: append-only file and no eviction, so queued jobs survive restarts (I-007).
+    command: ["redis-server", "--appendonly", "yes", "--appendfsync", "everysec", "--maxmemory-policy", "noeviction"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+    logging: *logging
+
+  # One-shot, run by deploy.sh before the app is (re)started: `docker compose run --rm migrate`.
+  migrate:
+    <<: *api
+    profiles: [tools]
+    restart: "no"
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  api:
+    <<: *api
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  worker:
+    <<: *api
+    command: ["taskiq", "worker", "app.worker:broker"]
+    healthcheck: { test: ["CMD-SHELL", "kill -0 1"], interval: 30s }
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  # Exactly one instance, or each cron job runs twice.
+  scheduler:
+    <<: *api
+    command: ["taskiq", "scheduler", "app.worker:scheduler"]
+    healthcheck: { test: ["CMD-SHELL", "kill -0 1"], interval: 30s }
+    depends_on:
+      redis: { condition: service_healthy }
+
+  web:
+    image: ghcr.io/indrarasyid07/fredd-web:${WEB_TAG:-development}
+    restart: unless-stopped
+    environment:
+      API_INTERNAL_URL: http://api:8000
+    logging: *logging
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "${APP_BIND:-0.0.0.0}:${APP_PORT:-8095}:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      api: { condition: service_healthy }
+      web: { condition: service_healthy }
+    logging: *logging
+
+volumes:
+  postgres-data:
+  redis-data:
+  media-data:
