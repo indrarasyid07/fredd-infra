@@ -49,3 +49,33 @@ Rollback: jalankan ulang dengan tag image sebelumnya. Migrasi yang tidak bisa di
 | Backup database | Harian 02.00 |
 | Uji restore | Bulanan |
 | Update image dasar | Bulanan |
+
+## Server development
+
+Cabang `development` di ketiga repo otomatis ter-deploy ke VPS development (`139.162.58.173`, dipakai bersama proyek lain) di **http://139.162.58.173:8095**. Belum ada domain/TLS, jadi `ENVIRONMENT=development` (cookie tanpa `Secure`, email dicatat di log bila `SMTP_HOST` kosong, `/api/docs` terbuka).
+
+Setiap repo memicu deploy-nya sendiri dan hanya mengurus miliknya: repo aplikasi mengurus image, `fredd-infra` mengurus server.
+
+| Pemicu | Workflow | Yang terjadi |
+|---|---|---|
+| `ci` lulus pada push ke `development` di fredd-backend | `deploy-development.yml` | build image `ghcr.io/indrarasyid07/fredd-api:{development,<sha>}`, lalu SSH `deploy.sh api` (pull, `alembic upgrade head`, restart api/worker/scheduler) |
+| `ci` lulus pada push ke `development` di fredd-frontend | `deploy-development.yml` | build image `ghcr.io/indrarasyid07/fredd-web:{development,<sha>}` dengan `NEXT_PUBLIC_SITE_URL` = variable `DEPLOY_SITE_URL`, lalu SSH `deploy.sh web` |
+| push ke `development` di fredd-infra yang mengubah `deploy/development/**` atau `caddy/Caddyfile` | `deploy-development.yml` | validasi compose, salin `docker-compose-dev.yml`, `deploy.sh`, `.env.example`, `Caddyfile` ke `/opt/fluctuz`, lalu `deploy.sh` tanpa pull. **Hanya workflow ini yang menyalin file ke server.** |
+
+Semua workflow juga bisa dijalankan manual (`workflow_dispatch`).
+
+**Di server** (`/opt/fluctuz`, milik user `deploy`): `docker-compose-dev.yml`, `deploy.sh`, `Caddyfile` disalin oleh workflow fredd-infra; `.env` (salinan [`.env.example`](../../deploy/development/.env.example), berisi `POSTGRES_PASSWORD` dll.) dibuat sekali dengan tangan dan tidak pernah ditimpa. Nama project compose `fluctuz-dev`; Postgres dan Redis tidak membuka port ke host. Login GHCR memakai `DOCKER_CONFIG=/opt/fluctuz/.docker` dan di-logout setelah pull, jadi login registry proyek lain di host tidak terganggu.
+
+**GitHub** (sama di ketiga repo): secret `DEPLOY_SSH_KEY` (key ed25519 khusus, `github-actions-fluctuz-dev`) dan `DEPLOY_KNOWN_HOSTS`; variable `DEPLOY_HOST`, `DEPLOY_USER`; fredd-frontend juga `DEPLOY_SITE_URL`. `DEPLOY_SITE_URL` harus sama dengan `APP_BASE_URL` di `.env` server.
+
+**Env var baru dari backend** tidak butuh PR ke fredd-infra: api, worker, scheduler, dan migrate membaca seluruh `/opt/fluctuz/.env` (`env_file`). Tambahkan variabelnya ke `fredd-backend/.env.example` dan ke `.env` server sebelum PR backend di-merge. Hanya `DATABASE_URL`, `REDIS_URL`, `MEDIA_DIR`, `ENVIRONMENT`, dan `APP_BASE_URL` yang disusun oleh compose.
+
+**Rollback** satu layanan: isi `API_TAG=<sha>` atau `WEB_TAG=<sha>` di `/opt/fluctuz/.env`, lalu `bash /opt/fluctuz/deploy.sh`. Hapus lagi baris itu agar deploy berikutnya kembali ke `development`.
+
+**Operasional:**
+
+```bash
+cd /opt/fluctuz
+docker compose -f docker-compose-dev.yml logs -f api worker
+docker compose -f docker-compose-dev.yml run --rm -T migrate python -m scripts.seed reference   # data rujukan wilayah
+```
