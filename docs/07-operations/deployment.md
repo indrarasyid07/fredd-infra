@@ -70,6 +70,8 @@ Semua workflow juga bisa dijalankan manual (`workflow_dispatch`).
 
 **Env var baru dari backend** tidak butuh PR ke fredd-infra: api, worker, scheduler, dan migrate membaca seluruh `/opt/fluctuz/.env` (`env_file`). Tambahkan variabelnya ke `fredd-backend/.env.example` dan ke `.env` server sebelum PR backend di-merge. Hanya `DATABASE_URL`, `REDIS_URL`, `MEDIA_DIR`, `ENVIRONMENT`, dan `APP_BASE_URL` yang disusun oleh compose.
 
+**Bot Telegram (sementara):** server belum punya domain/TLS, sedangkan Telegram hanya memanggil webhook https. Service `telegram-poll` menjalankan `scripts.telegram_poll` (long-poll `getUpdates`), cukup `TELEGRAM_BOT_TOKEN` di `.env`. Tepat satu instance, dan hanya untuk bot development. Setelah ada domain: hapus service ini, lalu `setWebhook` ke `https://<domain>/webhooks/telegram` dengan `secret_token` = `TELEGRAM_WEBHOOK_SECRET`.
+
 **Rollback** satu layanan: isi `API_TAG=<sha>` atau `WEB_TAG=<sha>` di `/opt/fluctuz/.env`, lalu `bash /opt/fluctuz/deploy.sh`. Hapus lagi baris itu agar deploy berikutnya kembali ke `development`.
 
 **Operasional:**
